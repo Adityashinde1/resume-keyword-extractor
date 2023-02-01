@@ -10,4 +10,6 @@ class DataIngestionArtifacts:
 # Data Transformation Artifacts
 @dataclass
 class DataTransformationArtifacts:
-    pass
+    resume_pdf_images_path: str
+    resume_txt_files_path: str
+    txt_filepath: str

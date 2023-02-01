@@ -70,6 +70,9 @@ class DataTransformation:
                 for f in read_files:
                     with open(txt_files_path + '/' + f, 'rb') as infile:
                         outfile.write(infile.read())
+
+                outfile.close()
+
             logger.info("Exited the concatenate_txt_file method of Data transformation class")
 
         except Exception as e:
@@ -104,8 +107,15 @@ class DataTransformation:
             logger.info("Genarated one txt file for annotations.")
 
             self.s3_opearations.upload_file(from_filename=self.data_transformation_config.TXT_FILE_PATH, to_filename=TXT_FILE_NAME, 
-                                            bucket_name=BUCKET_NAME)
+                                            bucket_name=BUCKET_NAME,remove=False)
             logger.info("Txt file uploaded to s3 bucket for annotations")
+
+            data_transformation_artifacts = DataTransformationArtifacts(resume_pdf_images_path=pdf_img_folder_path,
+                                                                        resume_txt_files_path=txt_folder_path,
+                                                                        txt_filepath=self.data_transformation_config.TXT_FILE_PATH)
+            logger.info("Exited the initiate_data_transformation method of Data transformation class")
+
+            return data_transformation_artifacts
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
