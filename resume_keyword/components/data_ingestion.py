@@ -43,6 +43,7 @@ class Data_ingestion:
     def initiate_data_ingestion(self) -> DataIngestionArtifacts:
         try:
             logger.info("Entered the initiate_data_ingestion method of Data ingestion class")
+
             # Creating Data Ingestion Artifacts directory inside artifact folder
             os.makedirs(self.data_ingestion_config.DATA_INGESTION_ARTIFACTS_DIR, exist_ok=True)
             logger.info(
@@ -58,7 +59,8 @@ class Data_ingestion:
             logger.info("Extracted the images from the zip file")
 
             # Saving data ingestion artifacts
-            data_ingestion_artifacts = DataIngestionArtifacts(pdf_image_folder_path=self.data_ingestion_config.UNZIP_FOLDER_PATH) 
+            data_ingestion_artifacts = DataIngestionArtifacts(pdf_zip_file_path=self.data_ingestion_config.UNZIP_FOLDER_PATH,
+                                                              pdf_folder_path=os.path.join(self.data_ingestion_config.UNZIP_FOLDER_PATH, UNZIP_FOLDER_NAME)) 
 
             logger.info("Exited the initiate_data_ingestion method of Data ingestion class")
             return data_ingestion_artifacts
