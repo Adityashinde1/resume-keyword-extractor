@@ -111,7 +111,7 @@ class DataTransformation:
                     TEST_RESUME_TXT_FILE_FOLDER_NAME,
                     f"image_txt_{str(i)}.txt",
                 )
-                with open(fname, "w") as file:
+                with open(fname, "w", encoding='utf-8') as file:
                     file.write(text)
 
         except Exception as e:
