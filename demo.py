@@ -47,7 +47,7 @@
 
 
 
-from resume_keyword.pipeline.train import TrainPipeline
+from resume_keyword.pipeline.train_pipeline import TrainPipeline
 
 tp = TrainPipeline()
 
