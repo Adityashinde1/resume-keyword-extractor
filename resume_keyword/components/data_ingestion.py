@@ -50,17 +50,25 @@ class Data_ingestion:
                 f"Created {os.path.basename(self.data_ingestion_config.DATA_INGESTION_ARTIFACTS_DIR)} directory."
             )
             
-            self.get_pdf_from_s3(bucket_file_name=S3_DATA_FOLDER_NAME, bucket_name=BUCKET_NAME,
-                                               output_filepath=self.data_ingestion_config.ZIP_DATA_PATH)
-            logger.info("Downloaded images zip file from S3 bucket")
+            self.get_pdf_from_s3(bucket_file_name=S3_TRAIN_DATA_FILE_NAME, bucket_name=BUCKET_NAME,
+                                               output_filepath=self.data_ingestion_config.TRAIN_ZIP_DATA_PATH)
+            logger.info(f"Downloaded Train images zip file from S3 bucket. File name - {os.path.basename(self.data_ingestion_config.TRAIN_ZIP_DATA_PATH)}")
 
-            # Unzipping the file
-            self.unzip_file(zip_data_filepath=self.data_ingestion_config.ZIP_DATA_PATH, unzip_dir_path=self.data_ingestion_config.UNZIP_FOLDER_PATH)
-            logger.info("Extracted the images from the zip file")
+            self.get_pdf_from_s3(bucket_file_name=S3_TEST_DATA_FILE_NAME, bucket_name=BUCKET_NAME,
+                                               output_filepath=self.data_ingestion_config.TEST_ZIP_DATA_PATH)
+            logger.info(f"Downloaded Test images zip file from S3 bucket. File name - {os.path.basename(self.data_ingestion_config.TEST_ZIP_DATA_PATH)}")
+
+            # Unzipping the train data pdf files
+            self.unzip_file(zip_data_filepath=self.data_ingestion_config.TRAIN_ZIP_DATA_PATH, unzip_dir_path=self.data_ingestion_config.UNZIP_TRAIN_FOLDER_PATH)
+            logger.info("Extracted the images from the zip file.")
+
+            # Unzipping the test data pdf files
+            self.unzip_file(zip_data_filepath=self.data_ingestion_config.TEST_ZIP_DATA_PATH, unzip_dir_path=self.data_ingestion_config.UNZIP_TEST_FOLDER_PATH)
+            logger.info("Extracted the images from the zip file.")
 
             # Saving data ingestion artifacts
-            data_ingestion_artifacts = DataIngestionArtifacts(pdf_zip_file_path=self.data_ingestion_config.UNZIP_FOLDER_PATH,
-                                                              pdf_folder_path=os.path.join(self.data_ingestion_config.UNZIP_FOLDER_PATH, UNZIP_FOLDER_NAME)) 
+            data_ingestion_artifacts = DataIngestionArtifacts(train_pdf_file_path=self.data_ingestion_config.UNZIP_TRAIN_FOLDER_PATH,
+                                                                test_pdf_file_path=self.data_ingestion_config.UNZIP_TEST_FOLDER_PATH) 
 
             logger.info("Exited the initiate_data_ingestion method of Data ingestion class")
             return data_ingestion_artifacts

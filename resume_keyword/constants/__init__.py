@@ -9,15 +9,31 @@ LOGS_DIR = 'logs'
 LOGS_FILE_NAME = 'resume_keyword.log'
 
 
-BUCKET_NAME = 'reusme-keyword-extractor'
-S3_DATA_FOLDER_NAME = "resume_data.zip"
-PDF_IMAGES_FOLDER_NAME = 'resume_pdf_images'
-UNZIP_FOLDER_NAME = 'resume_data'
-RESUME_TXT_FILE_FOLDER_NAME = 'resume_txt_files'
+BUCKET_NAME = 'resume-keyword-extractor'
+
+
 
 DATA_INGESTION_ARTIFACTS_DIR = 'DataIngestionArtifacts'
+S3_TRAIN_DATA_FILE_NAME = "resume_data_train.zip"
+S3_TEST_DATA_FILE_NAME = "resume_data_test.zip"
+UNZIP_TRAIN_DATA_FOLDER_NAME = 'resume_data_train'
+UNZIP_TEST_DATA_FOLDER_NAME = 'resume_data_test'
+
 
 POPPLER_PATH = 'C:/Program Files/poppler-0.68.0/bin'
 TESSERACT_CMD = r'C:/Program Files/Tesseract-OCR/tesseract.exe'
 DATA_TRANSFORMATION_ARTIFACTS_DIR = 'DataTransformationArtifacts'
-TXT_FILE_NAME = 'result.txt'
+TRAIN_PDF_IMAGES_FOLDER_NAME = 'train_resume_pdf_images'
+TEST_PDF_IMAGES_FOLDER_NAME = 'test_resume_pdf_images'
+TRAIN_RESUME_TXT_FILE_FOLDER_NAME = 'train_resume_txt_files'
+TEST_RESUME_TXT_FILE_FOLDER_NAME = 'test_resume_txt_files'
+TRAIN_TXT_FILE_NAME = 'train_result.txt'
+TEST_TXT_FILE_NAME = 'test_result.txt'
+
+MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
+S3_BEST_MODEL_FOLDER_NAME = ''
+TRAIN_ANNOTATION_FILE_NAME = 'train_annotations.json'
+TEST_ANNOTATION_FILE_NAME = 'test_annotations.json'
+SPACY_TRAIN_DATA_FORMAT_NAME = 'training_data.spacy'
+SPACY_TEST_DATA_FORMAT_NAME = 'testing_data.spacy'
+CONFIG_FILE_NAME = 'config.cfg'

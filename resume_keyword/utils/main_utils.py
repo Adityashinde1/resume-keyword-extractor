@@ -3,7 +3,7 @@ import sys
 from typing import Dict
 import dill
 import pickle
-import numpy as np
+import json
 import yaml
 from zipfile import Path
 from resume_keyword.constants import *
@@ -41,28 +41,6 @@ class MainUtils:
             with open(filepath, "rb") as pickle_obj:
                 obj = pickle.load(pickle_obj)
             return obj
-
-        except Exception as e:
-            raise ResumeKeywordException(e, sys) from e
-            
-
-    def save_numpy_array_data(self, file_path: str, array: np.array) -> str:
-        logger.info("Entered the save_numpy_array_data method of MainUtils class")
-        try:
-            with open(file_path, "wb") as file_obj:
-                np.save(file_obj, array)
-            logger.info("Exited the save_numpy_array_data method of MainUtils class")
-            return file_path
-
-        except Exception as e:
-            raise ResumeKeywordException(e, sys) from e
-
-
-    def load_numpy_array_data(self, file_path: str) -> np.array:
-        logger.info("Entered the load_numpy_array_data method of MainUtils class")
-        try:
-            with open(file_path, "rb") as file_obj:
-                return np.load(file_obj)
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
@@ -137,12 +115,26 @@ class MainUtils:
 
     @staticmethod
     def save_txt_file(output_file_path: str, data: list) -> Path: 
+        logger.info("Entered the save_txt_file method of MainUtils class")
         try:
             with open(output_file_path, "w") as file:
                 file.writelines("% s\n" % line for line in data)
 
+            logger.info("Exited the save_txt_file method of MainUtils class")
             return output_file_path
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
+    @staticmethod
+    def load_json(json_file_path: str) -> None:
+        logger.info("Entered the load_json method of MainUtils class")
+        try:
+            f = open(json_file_path)
+            data = json.load(f)
+
+            logger.info("Exited the load_json method of MainUtils class")
+            return data
+        
+        except Exception as e:
+            raise ResumeKeywordException(e, sys) from e

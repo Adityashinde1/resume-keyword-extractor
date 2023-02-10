@@ -9,7 +9,10 @@ __pycache__/
 
 demo.py
 artifacts
-
+test_annotations.json
+train_annotations.json
+model-best
+config.cfg
 # Distribution / packaging
 .Python
 build/
