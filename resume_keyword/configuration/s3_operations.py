@@ -8,7 +8,8 @@ import boto3
 from resume_keyword.exception import ResumeKeywordException
 from botocore.exceptions import ClientError
 from mypy_boto3_s3.service_resource import Bucket
-#from keras.models import load_model
+
+# from keras.models import load_model
 from pandas import DataFrame, read_csv
 import logging
 
@@ -30,8 +31,8 @@ class S3Operation:
         Method Name :   read_object
 
         Description :   This method reads the object_name object with kwargs
-        
-        Output      :   The column name is renamed 
+
+        Output      :   The column name is renamed
         """
         logger.info("Entered the read_object method of S3Operations class")
         try:
@@ -54,7 +55,7 @@ class S3Operation:
         Method Name :   get_bucket
 
         Description :   This method gets the bucket object based on the bucket_name
-        
+
         Output      :   Bucket object is returned based on the bucket name
         """
         logger.info("Entered the get_bucket method of S3Operations class")
@@ -66,7 +67,6 @@ class S3Operation:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     # def load_h5_model(self,bucket_name,object_file_name,local_file_name):
     #     try:
     #         self.download_file(bucket_name,local_file_name,object_file_name)
@@ -74,28 +74,30 @@ class S3Operation:
     #         model = load_model(local_file_name)
 
     #         return model
-            
-    #     except Exception as e:
-    #         raise e 
 
-    def get_image(self, bucket_name: str, prefix: str, total_number_of_images: int) -> List:
+    #     except Exception as e:
+    #         raise e
+
+    def get_image(
+        self, bucket_name: str, prefix: str, total_number_of_images: int
+    ) -> List:
 
         """
         Method Name :   get_image
 
         Description :   This method gets the images from the mentioned prefix(folder name)
-        
+
         Output      :   Bucket object is returned based on the bucket name and prefix
         """
         logger.info("Entered the get_image method of S3Operations class")
         try:
             my_bucket = self.s3_resource.Bucket(bucket_name)
             bucket_list = []
-            for file in my_bucket.objects.filter(Prefix = prefix):
+            for file in my_bucket.objects.filter(Prefix=prefix):
                 file_name = file.key
                 if file_name.find(".jpg") != -1:
                     bucket_list.append(file.key)
-            
+
             logger.info("Exited the get_image method of S3Operations class")
             return bucket_list[0:total_number_of_images]
 
@@ -108,7 +110,7 @@ class S3Operation:
         Method Name :   is_model_present
 
         Description :   This method validates whether model is present in the s3 bucket or not.
-        
+
         Output      :   True or False
         """
         try:
@@ -131,8 +133,8 @@ class S3Operation:
         """
         Method Name :   get_file_object
 
-        Description :   This method gets the file object from bucket_name bucket based on filename 
-        
+        Description :   This method gets the file object from bucket_name bucket based on filename
+
         Output      :   list of objects or object is returned based on filename
 
         """
@@ -156,7 +158,7 @@ class S3Operation:
         Method Name :   load_model
 
         Description :   This method loads the model_name from bucket_name bucket with kwargs
-        
+
         Output      :   list of objects or object is returned based on filename
         """
         logger.info("Entered the load_model method of S3Operations class")
@@ -183,7 +185,7 @@ class S3Operation:
         Method Name :   create_folder
 
         Description :   This method creates a folder_name folder in bucket_name bucket
-        
+
         Output      :   Folder is created in s3 bucket
         """
         logger.info("Entered the create_folder method of S3Operations class")
@@ -211,7 +213,7 @@ class S3Operation:
         Method Name :   upload_file
 
         Description :   This method uploads the from_filename file to bucket_name bucket with to_filename as bucket filename
-        
+
         Output      :   Folder is created in s3 bucket
         """
         logger.info("Entered the upload_file method of S3Operations class")
@@ -243,7 +245,7 @@ class S3Operation:
         Method Name :   upload_file
 
         Description :   This method uploads the from_filename file to bucket_name bucket with to_filename as bucket filename
-        
+
         Output      :   Folder is created in s3 bucket
         """
         logger.info("Entered the upload_folder method of S3Operations class")
@@ -269,8 +271,8 @@ class S3Operation:
         """
         Method Name :   upload_df_as_csv
 
-        Description :   This method uploads the dataframe to bucket_filename csv file in bucket_name bucket 
-        
+        Description :   This method uploads the dataframe to bucket_filename csv file in bucket_name bucket
+
         Output      :   Folder is created in s3 bucket
         """
         logger.info("Entered the upload_df_as_csv method of S3Operations class")
@@ -287,8 +289,8 @@ class S3Operation:
         """
         Method Name :   get_df_from_object
 
-        Description :   This method gets the dataframe from the object_name object 
-        
+        Description :   This method gets the dataframe from the object_name object
+
         Output      :   Folder is created in s3 bucket
         """
         logger.info("Entered the get_df_from_object method of S3Operations class")
@@ -307,8 +309,8 @@ class S3Operation:
         """
         Method Name :   get_df_from_object
 
-        Description :   This method gets the dataframe from the object_name object 
-        
+        Description :   This method gets the dataframe from the object_name object
+
         Output      :   Folder is created in s3 bucket
 
         """
@@ -322,14 +324,13 @@ class S3Operation:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     def download_file(self, bucket_name: str, output_file_path: str, key: str) -> None:
 
         """
         Method Name :   download_file
 
-        Description :   This method downloads the file from the s3 bucket and saves the file in directory 
-        
+        Description :   This method downloads the file from the s3 bucket and saves the file in directory
+
         Output      :   File is saved in local
 
         """
@@ -341,14 +342,15 @@ class S3Operation:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
-    def read_data_from_s3(self, bucket_filename: str, bucket_name: str, output_filepath: str) -> None:
+    def read_data_from_s3(
+        self, bucket_filename: str, bucket_name: str, output_filepath: str
+    ) -> None:
 
         """
         Method Name :   read_data_from_s3
 
-        Description :   This method downloads the file from the s3 bucket and saves the file in directory 
-        
+        Description :   This method downloads the file from the s3 bucket and saves the file in directory
+
         Output      :   returns object.
 
         """
@@ -358,6 +360,6 @@ class S3Operation:
             obj = bucket.download_file(Key=bucket_filename, Filename=output_filepath)
             logger.info("Exited the read_data_from_s3 method of S3Operation class")
             return obj
-            
+
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e

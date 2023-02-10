@@ -24,16 +24,14 @@ class MainUtils:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     @staticmethod
-    def dump_pickle_file(output_filepath: str, data) -> None: 
+    def dump_pickle_file(output_filepath: str, data) -> None:
         try:
             with open(output_filepath, "wb") as encoded_pickle:
                 pickle.dump(data, encoded_pickle)
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
-
 
     @staticmethod
     def load_pickle_file(filepath: str) -> object:
@@ -44,7 +42,6 @@ class MainUtils:
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
-
 
     @staticmethod
     def save_object(file_path: str, obj: object) -> None:
@@ -60,7 +57,6 @@ class MainUtils:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     @staticmethod
     def load_object(file_path: str) -> object:
         logger.info("Entered the load_object method of MainUtils class")
@@ -73,7 +69,6 @@ class MainUtils:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     @staticmethod
     def create_artifacts_zip(file_name: str, folder_name: str) -> None:
         logger.info("Entered the create_artifacts_zip method of MainUtils class")
@@ -83,7 +78,6 @@ class MainUtils:
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
-
 
     @staticmethod
     def unzip_file(filename: str, folder_name: str) -> None:
@@ -95,13 +89,12 @@ class MainUtils:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
-    @staticmethod        
+    @staticmethod
     def read_txt_file(filename: str) -> str:
         logger.info("Entered the read_txt_file method of MainUtils class")
         try:
             # Opening file for read only
-            file1 = open(filename, 'r')
+            file1 = open(filename, "r")
             # read all text
             text = file1.read()
             # close the file
@@ -112,9 +105,8 @@ class MainUtils:
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
-
     @staticmethod
-    def save_txt_file(output_file_path: str, data: list) -> Path: 
+    def save_txt_file(output_file_path: str, data: list) -> Path:
         logger.info("Entered the save_txt_file method of MainUtils class")
         try:
             with open(output_file_path, "w") as file:
@@ -135,6 +127,6 @@ class MainUtils:
 
             logger.info("Exited the load_json method of MainUtils class")
             return data
-        
+
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
