@@ -11,7 +11,7 @@ from resume_keyword.configuration.s3_operations import S3Operation
 logger = logging.getLogger(__name__)
 
 
-class Data_ingestion:
+class DataIngestion:
     def __init__(
         self, data_ingestion_config: DataIngestionConfig, S3_operations: S3Operation
     ) -> None:
