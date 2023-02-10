@@ -7,13 +7,13 @@ from resume_keyword.configuration.s3_operations import S3Operation
 
 
 
-# data_ingestion = Data_ingestion(data_ingestion_config=DataIngestionConfig(), S3_operations=S3Operation())
+data_ingestion = Data_ingestion(data_ingestion_config=DataIngestionConfig(), S3_operations=S3Operation())
 
-# data_ingestion_artifacts = data_ingestion.initiate_data_ingestion()
+data_ingestion_artifacts = data_ingestion.initiate_data_ingestion()
 
-# data_transformation = DataTransformation(data_transformation_config=DataTransformationConfig(), data_ingestion_artifacts=data_ingestion_artifacts, s3_opearations=S3Operation())
+data_transformation = DataTransformation(data_transformation_config=DataTransformationConfig(), data_ingestion_artifacts=data_ingestion_artifacts, s3_opearations=S3Operation())
 
-# data_transformation_artifacts = data_transformation.initiate_data_transformation()
+data_transformation_artifacts = data_transformation.initiate_data_transformation()
 
 model_trainer = ModelTrainer(model_trainer_config=ModelTrainerConfig(), data_transformation_artifacts=DataIngestionArtifacts)
 

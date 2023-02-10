@@ -100,6 +100,10 @@ class ModelTrainer:
             # Training 
             best_model_path = os.path.join(ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
             os.system(f"python -m spacy train {config_file_path} --output {best_model_path} --paths.train {prepared_train_data_local_path} --paths.dev {prepared_test_data_local_path}")
+            logger.info("Model training Done...!!")
+            
+            self.s3.upload_folder(folder_name=best_model_path, bucket_name=BUCKET_NAME)
+            logger.info("Best model uploaded to s3 bucket.")
 
 
         except Exception as e:
