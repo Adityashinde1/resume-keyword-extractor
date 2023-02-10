@@ -122,7 +122,7 @@ class MainUtils:
     def load_json(json_file_path: str) -> None:
         logger.info("Entered the load_json method of MainUtils class")
         try:
-            f = open(json_file_path)
+            f = open(json_file_path, encoding = 'utf-8')
             data = json.load(f)
 
             logger.info("Exited the load_json method of MainUtils class")
