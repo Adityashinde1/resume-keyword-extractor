@@ -9,7 +9,7 @@ from resume_keyword.configuration.s3_operations import S3Operation
 from tqdm import tqdm
 from resume_keyword.constants import *
 from resume_keyword.exception import ResumeKeywordException
-from resume_keyword.entity.artifacts_entity import DataTransformationArtifacts
+from resume_keyword.entity.artifacts_entity import DataTransformationArtifacts, ModelTrainerArtifacts
 from resume_keyword.entity.config_entity import ModelTrainerConfig
 
 logger = logging.getLogger(__name__)
@@ -71,8 +71,9 @@ class ModelTrainer:
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
+        
 
-    def initiate_model_trainer(self):
+    def initiate_model_trainer(self) -> ModelTrainerArtifacts:
         try:
             logger.info(
                 "Entered the initiate_model_trainer method of Model trainer class"
@@ -154,8 +155,16 @@ class ModelTrainer:
             )
             logger.info("Model training Done...!!")
 
-            self.s3.upload_folder(folder_name=best_model_path, bucket_name=BUCKET_NAME)
+            best_model_local_path = os.path.join(ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR, BEST_MODEL_FOLDER_NAME)         
+            self.s3.sync_folder_to_s3(folder=best_model_local_path,bucket_folder_name=BEST_MODEL_FOLDER_NAME,bucket_name=BUCKET_NAME)          
             logger.info("Best model uploaded to s3 bucket.")
+
+            model_trainer_artifacts = ModelTrainerArtifacts(best_model_path=best_model_local_path)
+
+            logger.info(
+                "Exited the initiate_model_trainer method of Model trainer class"
+            )
+            return model_trainer_artifacts
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e

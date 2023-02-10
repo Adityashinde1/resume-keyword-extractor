@@ -14,3 +14,9 @@ class DataTransformationArtifacts:
     test_resume_pdf_images_path: str
     train_resume_txt_files_path: str
     test_resume_txt_files_path: str
+
+
+# Model Trainer Artifacts
+@dataclass
+class ModelTrainerArtifacts:
+    best_model_path: str

@@ -28,7 +28,7 @@ TRAIN_TXT_FILE_NAME = "train_result.txt"
 TEST_TXT_FILE_NAME = "test_result.txt"
 
 MODEL_TRAINER_ARTIFACTS_DIR = "ModelTrainerArtifacts"
-S3_BEST_MODEL_FOLDER_NAME = ""
+BEST_MODEL_FOLDER_NAME = "model-best"
 TRAIN_ANNOTATION_FILE_NAME = "train_annotations.json"
 TEST_ANNOTATION_FILE_NAME = "test_annotations.json"
 SPACY_TRAIN_DATA_FORMAT_NAME = "training_data.spacy"
