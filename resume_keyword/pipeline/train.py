@@ -42,8 +42,8 @@ class TrainPipeline:
     ) -> DataTransformationArtifacts:
         logger.info("Entered the start_data_transformation method of TrainPipeline class")
         try:
-            data_transformation = DataTransformation(data_transformation_config=self.data_transformation_config, data_ingestion_artifacts=data_ingestion_artifact,
-            s3_operations=self.s3_operations)
+            data_transformation = DataTransformation(data_transformation_config=self.data_transformation_config, data_ingestion_artifacts=data_ingestion_artifact, 
+                                                     s3_opearations=self.s3_operations)
 
             data_transformation_artifact = data_transformation.initiate_data_transformation()
             logger.info("Performed the data transformation operation")
@@ -86,6 +86,6 @@ class TrainPipeline:
             logger.info(
                 "Exited the run_pipeline method of TrainPipeline class"
             )
-            
+
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
