@@ -145,7 +145,7 @@ class ModelTrainer:
             # Downloading the config file for training
             config_file_path = os.path.join(from_root(), CONFIG_FILE_NAME)
             os.system(
-                f"python -m spacy init config {config_file_path} --lang en --pipeline ner --optimize accuracy --gpu"
+                f"python -m spacy init config {config_file_path} --lang en --pipeline ner --optimize accuracy"
             )
 
             # Training
