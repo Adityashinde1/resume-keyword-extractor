@@ -36,7 +36,7 @@ class ModelPredictor:
             os.makedirs(os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, PDF_TO_IMG_DIR), exist_ok=True)
             # Store Pdf with convert_from_path function
             images = convert_from_path(pdf_file_path)
-            for i in range(len(images)):
+            for i in images:
                 fname = os.path.join(
                         self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR,
                         PDF_TO_IMG_DIR,
