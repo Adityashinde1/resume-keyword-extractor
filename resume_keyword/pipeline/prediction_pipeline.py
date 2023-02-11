@@ -2,10 +2,12 @@ import os
 import sys
 import cv2
 import spacy
+import re
 import pytesseract
 from resume_keyword.configuration.s3_operations import S3Operation
 from resume_keyword.entity.config_entity import ModelPredictorConfig
 from resume_keyword.exception import ResumeKeywordException
+from resume_keyword.utils.main_utils import MainUtils
 import logging
 from pdf2image import convert_from_path
 from resume_keyword.constants import *
@@ -17,7 +19,7 @@ class ModelPredictor:
     def __init__(self) -> None:
         self.S3_operation = S3Operation()
         self.model_predictor_config = ModelPredictorConfig()
-
+        self.utils = MainUtils()
 
     def get_model_from_s3(self, folder: str, bucket_name: str, bucket_folder_name: str):
         try:
@@ -83,11 +85,22 @@ class ModelPredictor:
 
             self.pdf_to_img(pdf_file_path=filename)
 
-            img_pdf_folder_path = os.path.join(ARTIFACTS_DIR, MODEL_PREDICTOR_ARTIFACTS_DIR, IMG_TO_TXT_DIR)
+            img_pdf_folder_path = os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, PDF_TO_IMG_DIR)
             self.img_to_txt(img_pdf_folder_path=img_pdf_folder_path)
 
             nlp_ner = spacy.load(s3_model_download_path)
 
+            txt_folder_path = os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, IMG_TO_TXT_DIR)
+            skills = []
+            for file_ in os.listdir(txt_folder_path):
+              file_path = os.path.join(txt_folder_path, file_)
+              text = self.utils.read_txt_file(filename=file_path)
+              email = re.findall('\S+@\S+', text)
+              doc = nlp_ner(text)
+
+            
+              for skill in doc.ents:
+                skills.append(skill)
 
             
 

@@ -94,7 +94,7 @@ class MainUtils:
         logger.info("Entered the read_txt_file method of MainUtils class")
         try:
             # Opening file for read only
-            file1 = open(filename, "r")
+            file1 = open(filename, "r", encoding='utf-8')
             # read all text
             text = file1.read()
             # close the file
