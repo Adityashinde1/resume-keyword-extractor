@@ -42,7 +42,7 @@ class ModelPredictor:
                         PDF_TO_IMG_DIR,
                         f"image_{str(i)}.jpg",
                     )
-                images.save(fname)
+                i.save(fname)
 
             logger.info("Exited the pdf_to_img method of Data transformation class")
 
@@ -88,7 +88,7 @@ class ModelPredictor:
 
             nlp_ner = spacy.load(s3_model_download_path)
 
-            
+
             
 
         except Exception as e:
