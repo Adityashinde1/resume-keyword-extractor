@@ -61,7 +61,7 @@ class ModelPredictor:
                 img = cv2.resize(img, (1000, 1100))
                 text = pytesseract.image_to_string(img)
 
-                fname = os.path.join(f"image_txt_{str(i)}.txt")
+                fname = os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, IMG_TO_TXT_DIR,f"image_txt_{str(i)}.txt")
                 with open(fname, "w", encoding='utf-8') as file:
                     file.write(text)
 
