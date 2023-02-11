@@ -16,5 +16,6 @@ def training():
         raise ResumeKeywordException(e, sys) from e
 
 
+
 if __name__ == "__main__":
     training()

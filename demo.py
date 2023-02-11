@@ -3,7 +3,7 @@
 # from resume_keyword.components.model_trainer import ModelTrainer
 # from resume_keyword.entity.config_entity import DataIngestionConfig, DataTransformationConfig, ModelTrainerConfig
 # from resume_keyword.entity.artifacts_entity import DataIngestionArtifacts
-# from resume_keyword.configuration.s3_operations import S3Operation
+from resume_keyword.configuration.s3_operations import S3Operation
 
 
 
@@ -45,10 +45,3 @@
 
 # os.system(comd)
 
-
-
-from resume_keyword.pipeline.train_pipeline import TrainPipeline
-
-tp = TrainPipeline()
-
-tp.run_pipeline()

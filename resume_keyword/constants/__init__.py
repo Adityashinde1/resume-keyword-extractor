@@ -34,3 +34,7 @@ TEST_ANNOTATION_FILE_NAME = "test_annotations.json"
 SPACY_TRAIN_DATA_FORMAT_NAME = "training_data.spacy"
 SPACY_TEST_DATA_FORMAT_NAME = "testing_data.spacy"
 CONFIG_FILE_NAME = "config.cfg"
+
+MODEL_PREDICTOR_ARTIFACTS_DIR = 'ModelPredictorArtifacts'
+PDF_TO_IMG_DIR = 'pdf_to_img'
+IMG_TO_TXT_DIR = 'img_to_txt'

@@ -13,6 +13,7 @@ test_annotations.json
 train_annotations.json
 model-best
 config.cfg
+*.pdf
 # Distribution / packaging
 .Python
 build/

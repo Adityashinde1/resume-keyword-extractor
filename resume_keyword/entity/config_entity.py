@@ -49,3 +49,10 @@ class ModelTrainerConfig:
         self.TEST_ANNOTAIONS_PATH: str = os.path.join(
             from_root(), TEST_ANNOTATION_FILE_NAME
         )
+
+
+@dataclass
+class ModelPredictorConfig:
+    def __init__(self):
+        self.MODEL_PREDICTOR_ARTIFACTS_DIR: str = os.path.join(ARTIFACTS_DIR, MODEL_PREDICTOR_ARTIFACTS_DIR)
+        

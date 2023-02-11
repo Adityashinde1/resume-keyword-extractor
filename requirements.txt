@@ -9,3 +9,6 @@ opencv-python==4.7.0.68
 pytesseract==0.3.10
 spacy==3.5.0
 ipykernel==6.21.1
+fastapi==0.91.0
+python-multipart==0.0.5
+uvicorn==0.20.0
