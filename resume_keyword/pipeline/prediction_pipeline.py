@@ -5,6 +5,7 @@ import spacy
 import re
 import pytesseract
 from resume_keyword.configuration.s3_operations import S3Operation
+from resume_keyword.configuration.mongo_operation import MongoDBOperation
 from resume_keyword.entity.config_entity import ModelPredictorConfig
 from resume_keyword.exception import ResumeKeywordException
 from resume_keyword.utils.main_utils import MainUtils
@@ -20,6 +21,7 @@ class ModelPredictor:
         self.S3_operation = S3Operation()
         self.model_predictor_config = ModelPredictorConfig()
         self.utils = MainUtils()
+        self.mongodb_op = MongoDBOperation()
 
     def get_model_from_s3(self, folder: str, bucket_name: str, bucket_folder_name: str):
         try:
@@ -71,6 +73,18 @@ class ModelPredictor:
             raise ResumeKeywordException(e, sys) from e
 
 
+    @staticmethod
+    def create_dict(key: list, values: tuple) -> dict:
+      try:
+        result = {}
+        for i in key:
+          result[i] = values
+        return result
+        
+      except Exception as e:
+        raise ResumeKeywordException(e, sys) from e
+      
+
     def initiate_model_predictor(self, filename: str):
         try:
             logger.info("Entered the initiate_model_predictor method of Model predictor class.")
@@ -98,9 +112,13 @@ class ModelPredictor:
               email = re.findall('\S+@\S+', text)
               doc = nlp_ner(text)
 
-            
               for skill in doc.ents:
                 skills.append(skill)
+
+            tup_skills = tuple(skills)
+            result = self.create_dict(key=email, values=tup_skills)
+
+            self.mongodb_op.insert_dict_as_record(dictionary=result, db_name=DB_NAME, collection_name=COLLECTION_NAME)
 
             
 

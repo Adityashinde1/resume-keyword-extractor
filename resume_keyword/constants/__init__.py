@@ -1,4 +1,5 @@
 import os
+from os import environ
 from datetime import datetime
 from from_root import from_root
 
@@ -38,3 +39,6 @@ CONFIG_FILE_NAME = "config.cfg"
 MODEL_PREDICTOR_ARTIFACTS_DIR = 'ModelPredictorArtifacts'
 PDF_TO_IMG_DIR = 'pdf_to_img'
 IMG_TO_TXT_DIR = 'img_to_txt'
+DB_URL = environ["MONGODB_URL"]
+DB_NAME = "ineuron"
+COLLECTION_NAME = "resume-keyword"
