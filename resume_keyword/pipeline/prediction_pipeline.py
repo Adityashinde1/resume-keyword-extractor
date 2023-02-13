@@ -96,7 +96,7 @@ class ModelPredictor:
         client = MongoClient(mongo_url)
         database = client[database_name]
         collection = database.get_collection(collection_name)
-        collection.insert_many(data)
+        collection.insert_one(data)
 
         logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
 
