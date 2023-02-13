@@ -11,6 +11,7 @@ from resume_keyword.exception import ResumeKeywordException
 from resume_keyword.utils.main_utils import MainUtils
 from pymongo import MongoClient
 import pandas as pd
+from pandas import DataFrame
 import logging
 from pdf2image import convert_from_path
 from resume_keyword.constants import *
@@ -72,33 +73,18 @@ class ModelPredictor:
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
-
-
-    @staticmethod
-    def create_dict(key: list, values: tuple) -> dict:
-      try:
-        logger.info("Entered the create_dict method of Data transformation class")
-
-        result = {}
-        for i in key:
-            result[i] = values
-
-        logger.info("Exited the create_dict method of Data transformation class")
-        return result
-        
-      except Exception as e:
-        raise ResumeKeywordException(e, sys) from e
       
 
     @staticmethod
-    def insert_dict_as_record_in_mongodb(mongo_url: str, database_name: str, collection_name: str, data: dict) -> None:
+    def insert_dict_as_record_in_mongodb(mongo_url: str, database_name: str, collection_name: str, data: DataFrame) -> None:
       try:
         logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
 
+        record = json.loads(data.T.to_json()).values()
         client = MongoClient(mongo_url)
         database = client[database_name]
         collection = database.get_collection(collection_name)
-        collection.insert_one(data)
+        collection.insert_one(record)
 
         logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
 
@@ -136,17 +122,11 @@ class ModelPredictor:
               for skill in doc.ents:
                 skills.append(skill)
 
-            # tup_skills = tuple(skills)
+            record = pd.DataFrame({'Email': pd.Series(email), 'Skills': [skills]})
 
-            data = pd.DataFrame({'Email': pd.Series(email), 'Skills': pd.Series(skills)})
-            result = self.create_dict(key=email, values=skills)
-            # data_to_upload = json.dumps(result)
-            print(data)
-
-            # self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=result)
+            self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 
             
-
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 

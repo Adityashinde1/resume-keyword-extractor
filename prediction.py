@@ -6,7 +6,7 @@ def prediction():
     try:
         model_predictor = ModelPredictor()
 
-        model_predictor.initiate_model_predictor(filename='D:/ineuron_org/dl_proj/resume-keyword-extractor/resume_194.pdf')
+        model_predictor.initiate_model_predictor(filename='/content/resume_194.pdf')
 
     except Exception as e:
         raise ResumeKeywordException(e, sys) from e
