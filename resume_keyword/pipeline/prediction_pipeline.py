@@ -10,6 +10,7 @@ from resume_keyword.entity.config_entity import ModelPredictorConfig
 from resume_keyword.exception import ResumeKeywordException
 from resume_keyword.utils.main_utils import MainUtils
 from pymongo import MongoClient
+import pandas as pd
 import logging
 from pdf2image import convert_from_path
 from resume_keyword.constants import *
@@ -135,10 +136,12 @@ class ModelPredictor:
               for skill in doc.ents:
                 skills.append(skill)
 
-            tup_skills = tuple(skills)
-            result = self.create_dict(key=email, values=tup_skills)
-            data_to_upload = json.dumps(result)
-            print(data_to_upload)
+            # tup_skills = tuple(skills)
+
+            data = pd.DataFrame({'Email': pd.Series(email), 'Skills': pd.Series()})
+            result = self.create_dict(key=email, values=skills)
+            # data_to_upload = json.dumps(result)
+            print(data)
 
             # self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=result)
 
