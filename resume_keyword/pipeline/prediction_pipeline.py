@@ -5,10 +5,10 @@ import spacy
 import re
 import pytesseract
 from resume_keyword.configuration.s3_operations import S3Operation
-from resume_keyword.configuration.mongo_operation import MongoDBOperation
 from resume_keyword.entity.config_entity import ModelPredictorConfig
 from resume_keyword.exception import ResumeKeywordException
 from resume_keyword.utils.main_utils import MainUtils
+from pymongo import MongoClient
 import logging
 from pdf2image import convert_from_path
 from resume_keyword.constants import *
@@ -21,7 +21,6 @@ class ModelPredictor:
         self.S3_operation = S3Operation()
         self.model_predictor_config = ModelPredictorConfig()
         self.utils = MainUtils()
-        self.mongodb_op = MongoDBOperation()
 
     def get_model_from_s3(self, folder: str, bucket_name: str, bucket_folder_name: str):
         try:
@@ -76,11 +75,31 @@ class ModelPredictor:
     @staticmethod
     def create_dict(key: list, values: tuple) -> dict:
       try:
+        logger.info("Entered the create_dict method of Data transformation class")
+
         result = {}
         for i in key:
-          result[i] = values
+            result[i] = values
+
+        logger.info("Exited the create_dict method of Data transformation class")
         return result
         
+      except Exception as e:
+        raise ResumeKeywordException(e, sys) from e
+      
+
+    @staticmethod
+    def insert_dict_as_record_in_mongodb(mongo_url: str, database_name: str, collection_name: str, data: dict) -> None:
+      try:
+        logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
+
+        client = MongoClient(mongo_url)
+        database = client[database_name]
+        collection = database.get_collection(collection_name)
+        collection.insert_many(data)
+
+        logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
+
       except Exception as e:
         raise ResumeKeywordException(e, sys) from e
       
@@ -118,7 +137,7 @@ class ModelPredictor:
             tup_skills = tuple(skills)
             result = self.create_dict(key=email, values=tup_skills)
 
-            self.mongodb_op.insert_dict_as_record(dictionary=result, db_name=DB_NAME, collection_name=COLLECTION_NAME)
+            self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=result)
 
             
 
