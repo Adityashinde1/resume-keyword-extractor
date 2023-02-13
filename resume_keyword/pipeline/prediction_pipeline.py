@@ -4,14 +4,12 @@ import cv2
 import spacy
 import re
 import pytesseract
-import json
 from resume_keyword.configuration.s3_operations import S3Operation
 from resume_keyword.entity.config_entity import ModelPredictorConfig
 from resume_keyword.exception import ResumeKeywordException
 from resume_keyword.utils.main_utils import MainUtils
 from pymongo import MongoClient
 import pandas as pd
-from pandas import DataFrame
 import logging
 from pdf2image import convert_from_path
 from resume_keyword.constants import *
@@ -76,15 +74,14 @@ class ModelPredictor:
       
 
     @staticmethod
-    def insert_dict_as_record_in_mongodb(mongo_url: str, database_name: str, collection_name: str, data: DataFrame) -> None:
+    def insert_dict_as_record_in_mongodb(mongo_url: str, database_name: str, collection_name: str, data: dict) -> None:
       try:
         logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
 
-        record = json.loads(data.T.to_json()).values()
         client = MongoClient(mongo_url)
         database = client[database_name]
         collection = database.get_collection(collection_name)
-        collection.insert_one(record)
+        collection.insert_one(data)
 
         logger.info("Entered the insert_dict_as_record_in_mongodb method of Data transformation class")
 
@@ -120,13 +117,12 @@ class ModelPredictor:
               doc = nlp_ner(text)
 
               for skill in doc.ents:
-                skills.append(skill)
+                skills.append(str(skill))
 
-            record = pd.DataFrame({'Email': pd.Series(email), 'Skills': [skills]})
+            record = {email[0]: skills}
 
             self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 
-            
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
