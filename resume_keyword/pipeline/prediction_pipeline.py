@@ -138,7 +138,7 @@ class ModelPredictor:
 
             # tup_skills = tuple(skills)
 
-            data = pd.DataFrame({'Email': pd.Series(email), 'Skills': pd.Series()})
+            data = pd.DataFrame({'Email': pd.Series(email), 'Skills': pd.Series(skill)})
             result = self.create_dict(key=email, values=skills)
             # data_to_upload = json.dumps(result)
             print(data)
