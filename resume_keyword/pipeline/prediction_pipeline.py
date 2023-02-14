@@ -113,13 +113,17 @@ class ModelPredictor:
 
             s3_model_download_path = os.path.join(from_root(), BEST_MODEL_FOLDER_NAME)
             self.get_model_from_s3(folder=s3_model_download_path, bucket_name=BUCKET_NAME, bucket_folder_name=BEST_MODEL_FOLDER_NAME)
+            logger.info("Downloaded best model from S3 bucket")
 
             self.pdf_to_img(pdf_file_path=filename)
+            logger.info("Converted pdf to image")
 
             img_pdf_folder_path = os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, PDF_TO_IMG_DIR)
             self.img_to_txt(img_pdf_folder_path=img_pdf_folder_path)
+            logger.info("Converted image to txt file")
 
             nlp_ner = spacy.load(s3_model_download_path)
+            logger.info("Model loaded for prediction")
 
             txt_folder_path = os.path.join(self.model_predictor_config.MODEL_PREDICTOR_ARTIFACTS_DIR, IMG_TO_TXT_DIR)
             skills = []
@@ -134,8 +138,10 @@ class ModelPredictor:
 
             if len(email) == 0:
               record = {'No_email': skills}
+              print(record)
             else:
               record = {email[0]: skills}
+              print(record)
 
             self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 

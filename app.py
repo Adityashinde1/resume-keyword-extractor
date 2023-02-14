@@ -3,6 +3,7 @@ from from_root import from_root
 from fastapi import FastAPI, UploadFile, File
 from uvicorn import run as app_run
 from resume_keyword.pipeline.prediction_pipeline import ModelPredictor
+from resume_keyword.constants import *
 
 app = FastAPI()
 
@@ -18,4 +19,4 @@ async def create_upload_file(uploaded_file: UploadFile = File(...)):
 
 
 if __name__ == "__main__":
-    app_run(app, host='0.0.0.0', port=8000)
+    app_run(app, host=APP_HOST, port=PORT)

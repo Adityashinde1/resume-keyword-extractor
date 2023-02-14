@@ -39,6 +39,9 @@ CONFIG_FILE_NAME = "config.cfg"
 MODEL_PREDICTOR_ARTIFACTS_DIR = 'ModelPredictorArtifacts'
 PDF_TO_IMG_DIR = 'pdf_to_img'
 IMG_TO_TXT_DIR = 'img_to_txt'
-MONGO_URL = 'mongodb+srv://iNeuron:RsPGmJUa69n558n@ineuron-ai-projects.7eh1w4s.mongodb.net/test'
+MONGO_URL = environ['MONGO_URL']
 DB_NAME = "ineuron"
 COLLECTION_NAME = "resume-keyword"
+
+APP_HOST = "0.0.0.0"
+PORT = 8000
