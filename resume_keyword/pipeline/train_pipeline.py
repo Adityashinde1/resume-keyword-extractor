@@ -68,7 +68,7 @@ class TrainPipeline:
             model_trainer_artifact = model_trainer.initiate_model_trainer()
 
             logger.info(
-                "Exited the start_data_transformation method of TrainPipeline class"
+                "Exited the start_model_trainer method of TrainPipeline class"
             )
             return model_trainer_artifact
 

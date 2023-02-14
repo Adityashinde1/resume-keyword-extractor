@@ -145,13 +145,13 @@ class ModelTrainer:
             # Downloading the config file for training
             config_file_path = os.path.join(from_root(), CONFIG_FILE_NAME)
             os.system(
-                f"python -m spacy init config {config_file_path} --lang en --pipeline ner --optimize efficiency"
+                f"python3 -m spacy init config {config_file_path} --lang en --pipeline ner --optimize efficiency"
             )
 
             # Training
             best_model_path = os.path.join(ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
             os.system(
-                f"python -m spacy train {config_file_path} --output {best_model_path} --paths.train {prepared_train_data_local_path} --paths.dev {prepared_test_data_local_path}"
+                f"python3 -m spacy train {config_file_path} --output {best_model_path} --paths.train {prepared_train_data_local_path} --paths.dev {prepared_test_data_local_path}"
             )
             logger.info("Model training Done...!!")
 
