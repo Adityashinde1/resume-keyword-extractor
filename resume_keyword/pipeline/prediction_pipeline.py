@@ -89,6 +89,19 @@ class ModelPredictor:
         raise ResumeKeywordException(e, sys) from e
       
 
+    @staticmethod
+    def use_regex(input_text: str):
+        try:
+            logger.info("Entered the use_regex method of Data transformation class")
+            pattern = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", re.IGNORECASE)
+            logger.info("Exited the use_regex method of Data transformation class")
+
+            return pattern.findall(input_text)
+        
+        except Exception as e:
+            raise ResumeKeywordException(e, sys) from e
+        
+
     def initiate_model_predictor(self, filename: str):
         try:
             logger.info("Entered the initiate_model_predictor method of Model predictor class.")
@@ -113,15 +126,15 @@ class ModelPredictor:
             for file_ in os.listdir(txt_folder_path):
               file_path = os.path.join(txt_folder_path, file_)
               text = self.utils.read_txt_file(filename=file_path)
-              email = re.findall('\S+@\S+', text)
+              email = self.use_regex(input_text=text)
               doc = nlp_ner(text)
 
               for skill in doc.ents:
                 skills.append(str(skill))
+            print(email)
+            # record = {email[0]: skills}
 
-            record = {email[0]: skills}
-
-            self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
+            # self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e

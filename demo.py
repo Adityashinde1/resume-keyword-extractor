@@ -45,3 +45,33 @@ from resume_keyword.configuration.s3_operations import S3Operation
 
 # os.system(comd)
 
+def read_txt_file(filename: str) -> str:
+        # Opening file for read only
+    file1 = open(filename, "r", encoding='utf-8')
+    # read all text
+    text = file1.read()
+    # close the file
+    file1.close()
+    
+    return text
+
+
+
+
+import os
+import re
+text = read_txt_file(filename="D:/txt/image_txt_0.txt")
+
+# ***@***.com
+
+def use_regex(input_text):
+    pattern = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b", re.IGNORECASE)
+    return pattern.findall(input_text)
+
+
+print(use_regex(text))
+    
+# email = re.findall(pattern='/[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+/g',string=text)
+
+
+# print(email)
