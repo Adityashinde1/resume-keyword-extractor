@@ -131,10 +131,13 @@ class ModelPredictor:
 
               for skill in doc.ents:
                 skills.append(str(skill))
-            print(email)
-            # record = {email[0]: skills}
 
-            # self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
+            if len(email) == 0:
+              record = {'No_email': skills}
+            else:
+              record = {email[0]: skills}
+
+            self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
