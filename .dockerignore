@@ -1,0 +1,12 @@
+artifacts
+build
+dist
+env
+model-best
+notebooks
+demo.py
+LICENSE
+README.md
+*.pdf
+test_annotations.json
+train_annotations.json

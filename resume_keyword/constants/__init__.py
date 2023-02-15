@@ -39,6 +39,7 @@ CONFIG_FILE_NAME = "config.cfg"
 MODEL_PREDICTOR_ARTIFACTS_DIR = 'ModelPredictorArtifacts'
 PDF_TO_IMG_DIR = 'pdf_to_img'
 IMG_TO_TXT_DIR = 'img_to_txt'
+PREDICTED_TXT_FILE_NAME = 'result.txt'
 MONGO_URL = environ['MONGO_URL']
 DB_NAME = "ineuron"
 COLLECTION_NAME = "resume-keyword"
