@@ -145,6 +145,8 @@ class ModelPredictor:
 
             self.insert_dict_as_record_in_mongodb(mongo_url=MONGO_URL, database_name=DB_NAME, collection_name=COLLECTION_NAME, data=record)
 
+            return record
+
         except Exception as e:
             raise ResumeKeywordException(e, sys) from e
 
